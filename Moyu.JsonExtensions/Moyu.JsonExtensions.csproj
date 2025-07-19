@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Moyu.JsonExtensions</PackageId>
+    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Description>Elegant JSON extension methods for .NET 6+.</Description>
+    <Authors>yi-Xu-0100</Authors>
+    <PackageVersion>1.0.0</PackageVersion>
+    <RepositoryUrl>https://github.com/yi-Xu-0100/Moyu.JsonExtensions</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/yi-Xu-0100/Moyu.JsonExtensions</PackageProjectUrl>
+    <Copyright>Copyright © 2025</Copyright>
+    <PackageTags>json;extension;dotnet;serializer</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+  </PropertyGroup>
+
+</Project>
