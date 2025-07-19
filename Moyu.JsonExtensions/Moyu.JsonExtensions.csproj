@@ -8,9 +8,9 @@
     <Description>Elegant JSON extension methods for .NET 6+.</Description>
     <Authors>yi-Xu-0100</Authors>
     <PackageVersion>1.0.0</PackageVersion>
-    <RepositoryUrl>https://github.com/yi-Xu-0100/Moyu.JsonExtensions</RepositoryUrl>
+    <RepositoryUrl>https://github.com/yi-Xu-0100/Moyu.DotnetExtensions</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/yi-Xu-0100/Moyu.JsonExtensions</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/yi-Xu-0100/Moyu.DotnetExtensions</PackageProjectUrl>
     <Copyright>Copyright © 2025</Copyright>
     <PackageTags>json;extension;dotnet;serializer</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
