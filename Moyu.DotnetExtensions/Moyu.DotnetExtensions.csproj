@@ -2,7 +2,6 @@
   <PropertyGroup>
     <PackageId>Moyu.DotnetExtensions</PackageId>
     <Description>All-in-one .NET extension packages by yi-Xu-0100.</Description>
-    <PackageVersion>1.0.0</PackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Moyu.JsonExtensions\Moyu.JsonExtensions.csproj" />

@@ -1,14 +1,26 @@
 <Project>
   <PropertyGroup>
-    <Company>yi-Xu-0100</Company>
+    <PackageVersion>1.0.0</PackageVersion>
     <Authors>yi-Xu-0100</Authors>
     <RepositoryUrl>https://github.com/yi-Xu-0100/Moyu.DotnetExtensions</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/yi-Xu-0100/Moyu.DotnetExtensions</PackageProjectUrl>
-    <Copyright>Copyright © 2025</Copyright>
+    <Copyright>Copyright © 2025 yi-Xu-0100</Copyright>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
     <PackageTags>json;extension;dotnet;serializer</PackageTags>
     <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+
+    <!-- SourceLink 支持 -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <EnableSourceLink>true</EnableSourceLink>
+    <IncludeSymbols>true</IncludeSymbols> <!-- 保留兼容性 -->
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- 构建信息 -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 </Project>

@@ -1,45 +1,65 @@
-name: Publish NuGet Package
+name: Publish NuGet Packages (Windows)
 
 on:
-    push:
-        tags:
-            - "v*"
+  push:
+    tags:
+      - v*
 
 permissions:
-    contents: write # ✅ 允许创建 Release
+  contents: write
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: windows-latest
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: "8.0.x"
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.x
 
-            - name: Restore dependencies
-              run: dotnet restore
+      - name: Setup NuGet CLI
+        uses: nuget/setup-nuget@v2
 
-            - name: Build
-              run: dotnet build --configuration Release --no-restore
+      - name: Restore all projects
+        run: dotnet restore
 
-            - name: Pack NuGet package
-              run: dotnet pack --configuration Release --no-build -o ./nupkg
+      - name: Build all projects
+        run: |
+          Get-ChildItem -Recurse -Filter *.csproj -Path .\src | ForEach-Object {
+            dotnet build $_.FullName -c Release --no-restore -p:SourceLinkEnabled=true
+          }
 
-            - name: Push to NuGet
-              run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      - name: Pack all projects
+        run: |
+          New-Item -ItemType Directory -Path artifacts -Force | Out-Null
+          Get-ChildItem -Recurse -Filter *.csproj -Path .\src | ForEach-Object {
+            dotnet pack $_.FullName -c Release --no-restore --output .\artifacts
+          }
 
-            - name: Create GitHub Release
-              uses: softprops/action-gh-release@v2
-              with:
-                  tag_name: ${{ github.ref_name }}
-                  name: Release ${{ github.ref_name }}
-                  body: |
-                      🧩 This is an automated release for version ${{ github.ref_name }}.
-                      - ✅ Published to NuGet.
-                  draft: false
-                  prerelease: false
+      - name: Push .nupkg to NuGet
+        run: |
+          Get-ChildItem .\artifacts\*.nupkg | ForEach-Object {
+            dotnet nuget push $_.FullName `
+              --skip-duplicate `
+              --api-key ${{ secrets.NUGET_API_KEY }} `
+              --source https://api.nuget.org/v3/index.json
+          }
+
+      - name: Upload NuGet Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages
+          path: artifacts\*.nupkg
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: |
+            ✅ Auto published for version ${{ github.ref_name }}.
+            🧩 Included all NuGet packages.

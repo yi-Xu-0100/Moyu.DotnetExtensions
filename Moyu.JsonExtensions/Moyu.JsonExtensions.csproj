@@ -3,7 +3,6 @@
   <PropertyGroup>
     <PackageId>Moyu.JsonExtensions</PackageId>
     <Description>Elegant JSON extension methods for .NET 6+.</Description>
-    <PackageVersion>1.0.0</PackageVersion>
   </PropertyGroup>
 
 </Project>
