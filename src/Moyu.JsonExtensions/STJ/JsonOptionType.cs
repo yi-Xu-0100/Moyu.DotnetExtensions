@@ -35,5 +35,5 @@ public enum JsonOptionType
     /// 启用缩进格式化输出 + Web 安全编码器（避免 HTML 注入风险），
     /// 支持 Enum 转字符串，并序列化字段（IncludeFields = true）。
     /// </summary>
-    IndentEncEnumStrFields,
+    IndentEncEnumStrFields
 }

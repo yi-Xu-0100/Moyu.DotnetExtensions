@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Concurrent;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -12,17 +11,15 @@ namespace Moyu.JsonExtensions.STJ;
 /// </summary>
 internal static class JsonOptionFactory
 {
-    private static readonly ConcurrentDictionary<JsonOptionType, JsonSerializerOptions> _cache = new();
+    private static readonly ConcurrentDictionary<JsonOptionType, JsonSerializerOptions> s_cache = new();
 
     /// <summary>
     /// 获取指定类型的 JsonSerializerOptions。如果已存在则直接返回缓存实例。
     /// </summary>
     /// <param name="type">Json 配置类型，默认 IndentEnc。</param>
     /// <returns>JsonSerializerOptions 实例。</returns>
-    internal static JsonSerializerOptions Create(JsonOptionType type = JsonOptionType.IndentEnc)
-    {
-        return _cache.GetOrAdd(type, CreateOptionsInternal);
-    }
+    internal static JsonSerializerOptions Create(JsonOptionType type = JsonOptionType.IndentEnc) =>
+        s_cache.GetOrAdd(type, CreateOptionsInternal);
 
     /// <summary>
     /// 内部方法：根据类型创建新的 JsonSerializerOptions。

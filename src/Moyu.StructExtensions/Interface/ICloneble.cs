@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Moyu.StructExtensions.Interface;
 
 /// <summary>
@@ -14,7 +8,7 @@ namespace Moyu.StructExtensions.Interface;
 /// 实现此接口的类必须提供一个克隆方法，该方法创建并返回对象的一个深拷贝。
 /// 深拷贝意味着新对象的所有成员（包括引用类型的成员）都是原始对象成员的副本，而不是引用。
 /// </remarks>
-public interface ICloneable<T>
+public interface ICloneable<out T>
 {
     /// <summary>
     /// 创建并返回当前对象的一个深拷贝。

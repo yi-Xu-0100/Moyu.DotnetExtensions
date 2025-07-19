@@ -11,6 +11,8 @@
     <PackageTags>json;extension;dotnet;serializer</PackageTags>
     <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <!-- SourceLink 支持 -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
