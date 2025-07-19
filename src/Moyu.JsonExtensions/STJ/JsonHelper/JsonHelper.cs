@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace Moyu.JsonExtensions.STJ;
 
 /// <summary>
-/// 提供 JSON 序列化和反序列化的扩展方法。
+/// 提供 JSON 处理相关的扩展方法。
 /// </summary>
 public static partial class JsonHelper
 {
