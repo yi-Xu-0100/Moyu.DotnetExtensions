@@ -10,6 +10,7 @@
     <IncludeSource>true</IncludeSource>
     <PackageTags>json;extension;dotnet;serializer</PackageTags>
     <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
 
     <!-- SourceLink 支持 -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>

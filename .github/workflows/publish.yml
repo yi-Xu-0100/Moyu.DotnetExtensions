@@ -40,6 +40,10 @@ jobs:
                 Get-ChildItem -Recurse -Filter *.csproj -Path .\src | ForEach-Object {
                   Write-Host "📦 Packing project: $($_.FullName)"
                   dotnet pack $_.FullName -c Release --no-restore --output .\artifacts
+                  if ($LASTEXITCODE -ne 0) {
+                    Write-Error "❌ Failed to pack $($_.FullName)"
+                    exit $LASTEXITCODE
+                  }
                 }
 
             - name: Push .nupkg to NuGet
