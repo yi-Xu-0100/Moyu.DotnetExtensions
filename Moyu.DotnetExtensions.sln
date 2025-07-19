@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36310.24
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		.csharpierrc.json = .csharpierrc.json
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		LICENSE = LICENSE
+		README.md = README.md
+		Settings.XamlStyler = Settings.XamlStyler
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moyu.DotnetExtensions", "src\Moyu.DotnetExtensions\Moyu.DotnetExtensions.csproj", "{6A059C88-4B2D-484A-9F40-CA87DE401765}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moyu.JsonExtensions", "src\Moyu.JsonExtensions\Moyu.JsonExtensions.csproj", "{D4450FCF-EFE5-C95B-B262-82C51141D6B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moyu.StructExtensions", "src\Moyu.StructExtensions\Moyu.StructExtensions.csproj", "{9BB439EF-8600-08C3-7368-822B8B313831}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A059C88-4B2D-484A-9F40-CA87DE401765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A059C88-4B2D-484A-9F40-CA87DE401765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A059C88-4B2D-484A-9F40-CA87DE401765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A059C88-4B2D-484A-9F40-CA87DE401765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4450FCF-EFE5-C95B-B262-82C51141D6B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4450FCF-EFE5-C95B-B262-82C51141D6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4450FCF-EFE5-C95B-B262-82C51141D6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4450FCF-EFE5-C95B-B262-82C51141D6B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BB439EF-8600-08C3-7368-822B8B313831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BB439EF-8600-08C3-7368-822B8B313831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BB439EF-8600-08C3-7368-822B8B313831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BB439EF-8600-08C3-7368-822B8B313831}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD585411-D8F6-44C7-8164-2008BADE6176}
+	EndGlobalSection
+EndGlobal

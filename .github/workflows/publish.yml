@@ -29,25 +29,28 @@ jobs:
 
             - name: Build all projects
               run: |
-                  Get-ChildItem -Recurse -Filter *.csproj -Path .\src | ForEach-Object {
-                    dotnet build $_.FullName -c Release --no-restore -p:SourceLinkEnabled=true
-                  }
+                Get-ChildItem -Recurse -Filter *.csproj -Path .\src | ForEach-Object {
+                  Write-Host "🔨 Building project: $($_.FullName)"
+                  dotnet build $_.FullName -c Release --no-restore -p:SourceLinkEnabled=true
+                }
 
             - name: Pack all projects
               run: |
-                  New-Item -ItemType Directory -Path artifacts -Force | Out-Null
-                  Get-ChildItem -Recurse -Filter *.csproj -Path .\src | ForEach-Object {
-                    dotnet pack $_.FullName -c Release --no-restore --output .\artifacts
-                  }
+                New-Item -ItemType Directory -Path artifacts -Force | Out-Null
+                Get-ChildItem -Recurse -Filter *.csproj -Path .\src | ForEach-Object {
+                  Write-Host "📦 Packing project: $($_.FullName)"
+                  dotnet pack $_.FullName -c Release --no-restore --output .\artifacts
+                }
 
             - name: Push .nupkg to NuGet
               run: |
-                  Get-ChildItem .\artifacts\*.nupkg | ForEach-Object {
-                    dotnet nuget push $_.FullName `
-                      --skip-duplicate `
-                      --api-key ${{ secrets.NUGET_API_KEY }} `
-                      --source https://api.nuget.org/v3/index.json
-                  }
+                Get-ChildItem .\artifacts\*.nupkg | ForEach-Object {
+                  Write-Host "🚀 Pushing package: $($_.FullName)"
+                  dotnet nuget push $_.FullName `
+                    --skip-duplicate `
+                    --api-key ${{ secrets.NUGET_API_KEY }} `
+                    --source https://api.nuget.org/v3/index.json
+                }
 
             - name: Upload NuGet Artifacts
               uses: actions/upload-artifact@v4
