@@ -1,6 +1,6 @@
-# Moyu.StructExtensions
+# Moyu.DotnetExtensions
 
-Elegant Struct extension methods for .NET 6+.
+Elegant JSON extension methods for .NET 6+.
 
 ## License
 

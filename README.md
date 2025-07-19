@@ -1,6 +1,6 @@
 # Moyu.DotnetExtensions
 
-Elegant extension methods for .NET 2+.
+Elegant JSON extension methods for .NET 6+.
 
 ## License
 
