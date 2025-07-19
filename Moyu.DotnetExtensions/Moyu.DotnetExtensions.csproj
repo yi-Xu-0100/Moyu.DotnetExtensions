@@ -2,7 +2,11 @@
   <PropertyGroup>
     <PackageId>Moyu.DotnetExtensions</PackageId>
     <Description>All-in-one .NET extension packages by yi-Xu-0100.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Moyu.JsonExtensions\Moyu.JsonExtensions.csproj" />
     <ProjectReference Include="..\Moyu.StructExtensions\Moyu.StructExtensions.csproj" />

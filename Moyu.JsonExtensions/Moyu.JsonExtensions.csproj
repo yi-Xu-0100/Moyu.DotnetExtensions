@@ -3,6 +3,10 @@
   <PropertyGroup>
     <PackageId>Moyu.JsonExtensions</PackageId>
     <Description>Elegant JSON extension methods for .NET 6+.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
 
 </Project>
