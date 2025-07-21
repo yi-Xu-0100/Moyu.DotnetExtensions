@@ -1,5 +1,5 @@
-﻿// Licensed to the.NET Foundation under one or more agreements.
-// The.NET Foundation licenses this file to you under the MIT license.
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
 namespace Moyu.StructExtensions;
 
@@ -12,7 +12,7 @@ public static partial class MathHelper
     /// <param name="b">第二个双精度浮点数。</param>
     /// <param name="epsilon">允许的误差范围，默认为 1e-6。</param>
     /// <returns>若两数差的绝对值小于 <paramref name="epsilon"/>，则返回 <c>true</c>；否则返回 <c>false</c>。</returns>
-    public static bool IsEqual(this double a, double b, double epsilon = 1e-6f) => Math.Abs(a - b) < epsilon;
+    public static bool IsEqual(this double a, double b, double epsilon) => Math.Abs(a - b) < epsilon;
 
     /// <summary>
     /// 返回指定 <see cref="double"/> 值的符号，考虑给定的误差范围。
