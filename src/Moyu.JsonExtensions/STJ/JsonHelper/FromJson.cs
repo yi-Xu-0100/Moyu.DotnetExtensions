@@ -1,5 +1,5 @@
 // Copyright (c) 2025-now yi-Xu-0100.
-// This file is licensed under the MIT License.See LICENSE for details.
+// This file is licensed under the MIT License. See LICENSE for details.
 
 using System.Text.Json;
 
