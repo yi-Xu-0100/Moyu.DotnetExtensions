@@ -1,7 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
-namespace Moyu.StructExtensions;
+﻿namespace Moyu.StructExtensions;
 
 public static partial class MathHelper
 {
