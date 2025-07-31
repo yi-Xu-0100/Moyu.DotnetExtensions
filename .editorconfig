@@ -28,7 +28,7 @@ indent_size = 2
 # Bvc.dll crashed in the CI build when this rule is enabled for VB.
 # C# files
 [src/**/*.cs]
-file_header_template = Copyright (c) 2025-now yi-Xu-0100.\nThis file is licensed under the MIT License. See LICENSE for details.
+file_header_template = Copyright © 2025-present yi-Xu-0100.\nThis file is licensed under the MIT License. See LICENSE for details.
 # C# and VB files
 [*.{cs,vb}]
 charset = utf-8
@@ -385,7 +385,7 @@ dotnet_diagnostic.IDE0230.severity = suggestion
 dotnet_diagnostic.IDE1005.severity = warning
 
 # IDE1006: Naming styles
-dotnet_diagnostic.IDE1006.severity = error
+dotnet_diagnostic.IDE1006.severity = suggestion
 
 # IDE2000: Allow multiple blank lines
 dotnet_diagnostic.IDE2000.severity = silent

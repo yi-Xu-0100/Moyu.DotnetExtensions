@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2025-now yi-Xu-0100.
+﻿// Copyright © 2025-present yi-Xu-0100.
 // This file is licensed under the MIT License. See LICENSE for details.
 
 namespace Moyu.StructExtensions;
@@ -19,7 +19,7 @@ public static partial class MathHelper
     /// </summary>
     /// <param name="value">要判断符号的值。</param>
     /// <param name="epsilon">用于判断是否为零的误差范围。</param>
-    /// <returns>若值接近于零（在误差范围内）则返回 <c>0</c>，否则返回 <c>1</c>（正数）或 <c>-1</c>（负数）。</returns>
+    /// <returns>若值接近于零(在误差范围内)则返回 <c>0</c>，否则返回 <c>1</c>(正数)或 <c>-1</c>(负数)。</returns>
     public static int Sign(this float value, float epsilon)
     {
         if (Math.Abs(value) < epsilon)

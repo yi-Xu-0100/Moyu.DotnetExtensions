@@ -1,4 +1,4 @@
-// Copyright (c) 2025-now yi-Xu-0100.
+// Copyright © 2025-present yi-Xu-0100.
 // This file is licensed under the MIT License. See LICENSE for details.
 
 namespace Moyu.JsonExtensions.STJ;
@@ -9,7 +9,7 @@ namespace Moyu.JsonExtensions.STJ;
 public enum JsonOptionType
 {
     /// <summary>
-    /// 启用缩进格式化输出 + Web 安全编码器（避免 HTML 注入风险）。
+    /// 启用缩进格式化输出 + Web 安全编码器(避免 HTML 注入风险)。
     /// </summary>
     IndentEnc,
 
@@ -19,24 +19,24 @@ public enum JsonOptionType
     EncOnly,
 
     /// <summary>
-    /// 启用编码器，并序列化字段（IncludeFields = true）。
+    /// 启用编码器，并序列化字段(IncludeFields = true)。
     /// </summary>
     EncFields,
 
     /// <summary>
-    /// 启用缩进格式化输出 + Web 安全编码器（避免 HTML 注入风险），并支持 Enum 到 string。
+    /// 启用缩进格式化输出 + Web 安全编码器(避免 HTML 注入风险)，并支持 Enum 到 string。
     /// </summary>
     IndentEncEnumStr,
 
     /// <summary>
-    /// 启用缩进格式化输出 + Web 安全编码器（避免 HTML 注入风险），
-    /// 支持 Enum 转字符串，并序列化字段（IncludeFields = true）。
+    /// 启用 Web 安全编码器(避免 HTML 注入风险)，
+    /// 支持 Enum 转字符串，并序列化字段(IncludeFields = true)。
     /// </summary>
     EncEnumStrFields,
 
     /// <summary>
-    /// 启用缩进格式化输出 + Web 安全编码器（避免 HTML 注入风险），
-    /// 支持 Enum 转字符串，并序列化字段（IncludeFields = true）。
+    /// 启用缩进格式化输出 + Web 安全编码器(避免 HTML 注入风险)，
+    /// 支持 Enum 转字符串，并序列化字段(IncludeFields = true)。
     /// </summary>
     IndentEncEnumStrFields
 }

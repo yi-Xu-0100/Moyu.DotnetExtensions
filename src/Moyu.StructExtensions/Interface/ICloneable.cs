@@ -1,4 +1,4 @@
-// Copyright (c) 2025-now yi-Xu-0100.
+// Copyright © 2025-present yi-Xu-0100.
 // This file is licensed under the MIT License. See LICENSE for details.
 
 namespace Moyu.StructExtensions.Interface;
@@ -9,7 +9,7 @@ namespace Moyu.StructExtensions.Interface;
 /// <typeparam name="T">要克隆的对象的类型。</typeparam>
 /// <remarks>
 /// 实现此接口的类必须提供一个克隆方法，该方法创建并返回对象的一个深拷贝。
-/// 深拷贝意味着新对象的所有成员（包括引用类型的成员）都是原始对象成员的副本，而不是引用。
+/// 深拷贝意味着新对象的所有成员(包括引用类型的成员)都是原始对象成员的副本，而不是引用。
 /// </remarks>
 public interface ICloneable<out T>
 {

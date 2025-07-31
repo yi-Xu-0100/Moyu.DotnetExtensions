@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2025-now yi-Xu-0100.
+﻿// Copyright © 2025-present yi-Xu-0100.
 // This file is licensed under the MIT License. See LICENSE for details.
 
 using Moyu.StructExtensions.Interface;
@@ -11,7 +11,7 @@ namespace Moyu.StructExtensions;
 /// </summary>
 /// <remarks>
 /// 本类中的扩展方法适用于实现了 <see cref="ICloneable{T}"/> 接口的类型，
-/// 可用于集合（如 <see cref="List{T}"/>）的递归深度克隆，
+/// 可用于集合(如 <see cref="List{T}"/>)的递归深度克隆，
 /// 确保克隆对象之间互不影响，适用于不可变性要求较高的业务场景。
 /// </remarks>
 public static partial class CloneableHelper
