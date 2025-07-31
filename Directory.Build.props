@@ -1,11 +1,11 @@
 <Project>
   <PropertyGroup>
-    <PackageVersion>1.8.4</PackageVersion>
+    <PackageVersion>1.9.0</PackageVersion>
     <Authors>yi-Xu-0100</Authors>
     <RepositoryUrl>https://github.com/yi-Xu-0100/Moyu.DotnetExtensions</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/yi-Xu-0100/Moyu.DotnetExtensions</PackageProjectUrl>
-    <Copyright>Copyright © 2025 yi-Xu-0100</Copyright>
+    <Copyright>Copyright © 2025-present yi-Xu-0100</Copyright>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
     <PackageTags>json;extension;dotnet;serializer</PackageTags>
