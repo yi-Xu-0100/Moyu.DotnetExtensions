@@ -2,7 +2,7 @@
 
 > 莫语 .net 扩展集. 憋说话, 用就完了!
 
-Elegant JSON extension methods for .NET 6+.
+Elegant JSON extension methods for .NET 8+.
 
 ## License
 

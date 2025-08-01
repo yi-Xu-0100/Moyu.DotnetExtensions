@@ -2,6 +2,7 @@
 // This file is licensed under the MIT License. See LICENSE for details.
 
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Moyu.JsonExtensions.STJ;
 
@@ -17,6 +18,16 @@ public static partial class JsonHelper
     /// <returns>对应的 JSON 配置选项。</returns>
     private static JsonSerializerOptions GetOptions(JsonOptionType optionType) =>
         JsonOptionFactory.Create(optionType);
+
+    /// <summary>
+    /// 初始化 JSON 解析器，设置全局的 JSON 类型信息解析器。
+    /// 该方法通常在应用程序启动时调用，以确保 JSON 序列化和反序列化的一致性。
+    /// </summary>
+    /// <param name="resolver">JSON 解析器</param>
+    public static void InitJsonResolver(IJsonTypeInfoResolver? resolver)
+    {
+        JsonOptionFactory.InitJsonResolver(resolver);
+    }
 
     /// <summary>
     /// 获取启用缩进格式化输出 + Web 安全编码器(避免 HTML 注入风险)的 JSON 配置选项。

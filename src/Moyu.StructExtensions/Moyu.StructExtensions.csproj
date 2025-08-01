@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>Moyu.StructExtensions</PackageId>
-    <Description>Elegant Struct extension methods for .NET 6+.</Description>
+    <Description>Elegant Struct extension methods for .NET 8+.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>

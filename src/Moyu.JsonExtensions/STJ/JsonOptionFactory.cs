@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using System.Text.Unicode;
 
 namespace Moyu.JsonExtensions.STJ;
@@ -14,6 +15,14 @@ namespace Moyu.JsonExtensions.STJ;
 /// </summary>
 internal static class JsonOptionFactory
 {
+    private static IJsonTypeInfoResolver? s_resolver;
+
+    internal static void InitJsonResolver(IJsonTypeInfoResolver? resolver)
+    {
+        s_resolver = resolver;
+        s_cache.Clear();
+    }
+
     private static readonly ConcurrentDictionary<JsonOptionType, JsonSerializerOptions> s_cache = new();
 
     /// <summary>
@@ -29,7 +38,11 @@ internal static class JsonOptionFactory
     /// </summary>
     private static JsonSerializerOptions CreateOptionsInternal(JsonOptionType type)
     {
-        JsonSerializerOptions options = new() { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) };
+        JsonSerializerOptions options = new()
+        {
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+            TypeInfoResolver = s_resolver,
+        };
 
         switch (type)
         {

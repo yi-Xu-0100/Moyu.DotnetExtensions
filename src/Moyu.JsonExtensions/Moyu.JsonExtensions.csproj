@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>Moyu.JsonExtensions</PackageId>
-    <Description>Elegant JSON extension methods for .NET 6+.</Description>
+    <Description>Elegant JSON extension methods for .NET 8+.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
