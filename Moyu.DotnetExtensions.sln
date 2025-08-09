@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moyu.JsonExtensions", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moyu.StructExtensions", "src\Moyu.StructExtensions\Moyu.StructExtensions.csproj", "{9BB439EF-8600-08C3-7368-822B8B313831}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moyu.LogExtensions", "src\Moyu.LogExtensions\Moyu.LogExtensions.csproj", "{6A829B63-092C-44F9-8790-CF23D4904076}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9BB439EF-8600-08C3-7368-822B8B313831}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BB439EF-8600-08C3-7368-822B8B313831}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BB439EF-8600-08C3-7368-822B8B313831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A829B63-092C-44F9-8790-CF23D4904076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A829B63-092C-44F9-8790-CF23D4904076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A829B63-092C-44F9-8790-CF23D4904076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A829B63-092C-44F9-8790-CF23D4904076}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
