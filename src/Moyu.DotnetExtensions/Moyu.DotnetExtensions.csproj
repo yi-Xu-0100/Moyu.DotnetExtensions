@@ -9,6 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Moyu.JsonExtensions\Moyu.JsonExtensions.csproj"/>
+    <ProjectReference Include="..\Moyu.LogExtensions\Moyu.LogExtensions.csproj" />
     <ProjectReference Include="..\Moyu.StructExtensions\Moyu.StructExtensions.csproj"/>
   </ItemGroup>
 </Project>
