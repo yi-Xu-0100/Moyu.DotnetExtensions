@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Moyu.StructExtensions</PackageId>
+    <Description>Elegant Struct extension methods for .NET 8+.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.8" />
+    <PackageReference Include="NModbus" Version="3.0.81" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Moyu.LogExtensions\Moyu.LogExtensions.csproj" />
+  </ItemGroup>
+</Project>
