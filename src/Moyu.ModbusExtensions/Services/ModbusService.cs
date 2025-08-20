@@ -72,12 +72,7 @@ public class ModbusService : IHostedService, IAsyncDisposable
     /// <param name="cancellationToken">取消令牌</param>
     public async Task StopAsync(CancellationToken cancellationToken)
     {
-        foreach (PollingGroup group in _pollingGroups.Values)
-        {
-            await group.Cts.CancelAsync();
-            group.Dispose();
-        }
-        _pollingGroups.Clear();
+        await StopPollingLoopAsync();
 
         await _connectionPool.DisposeAsync();
 
@@ -231,6 +226,35 @@ public class ModbusService : IHostedService, IAsyncDisposable
     }
 
     /// <summary>
+    /// 关闭全部轮询组
+    /// </summary>
+    public async Task StopPollingLoopAsync()
+    {
+        foreach (PollingGroup group in _pollingGroups.Values)
+        {
+            try
+            {
+                await group.Cts.CancelAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(ex, "取消PollingGroup失败");
+            }
+
+            try
+            {
+                group.Dispose();
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(ex, "释放PollingGroup资源失败");
+            }
+        }
+
+        _pollingGroups.Clear();
+    }
+
+    /// <summary>
     /// 启动轮询循环。
     /// </summary>
     /// <param name="groupId">组ID</param>
@@ -290,7 +314,6 @@ public class ModbusService : IHostedService, IAsyncDisposable
             group.Cts.Token
         );
     }
-
     #endregion
 
     #region 核心重试
