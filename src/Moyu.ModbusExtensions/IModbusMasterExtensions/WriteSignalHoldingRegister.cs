@@ -34,7 +34,7 @@ public static partial class ModbusMasterExtensions
     /// <param name="startAddress">起始地址</param>
     /// <param name="value">Boolean 值</param>
     /// <returns></returns>
-    public static async Task WriteBooleanHoldingRegisterAsync(
+    public static async Task WriteSignalHoldingRegisterAsync(
         this IModbusMaster modbusMaster,
         ushort startAddress,
         bool value
@@ -107,7 +107,7 @@ public static partial class ModbusMasterExtensions
     /// <param name="startAddress">起始地址</param>
     /// <param name="values">boolean[] 数组</param>
     /// <returns></returns>
-    public static async Task WriteBitBooleanHoldingRegisterAsync(
+    public static async Task WriteBitSignalHoldingRegisterAsync(
         this IModbusMaster modbusMaster,
         ushort startAddress,
         bool[] values
