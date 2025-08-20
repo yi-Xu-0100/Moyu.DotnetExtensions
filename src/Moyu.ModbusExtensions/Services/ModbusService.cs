@@ -22,25 +22,21 @@ public class ModbusService : IHostedService, IAsyncDisposable
     private readonly TimeSpan _connectTimeout;
     private readonly SemaphoreSlim _requestThrottler;
     private readonly ConcurrentDictionary<string, PollingGroup> _pollingGroups = new();
+    private readonly ILoggerFactory _loggerFactory;
     private readonly ILogger<ModbusService> _logger;
-    private readonly ILogger<ConnectionPool> _poolLogger;
-    private readonly ILogger<Connection> _connectionLogger;
     private ConnectionPool _connectionPool = null!;
 
     /// <summary>
     /// 初始化 ModbusService 实例。
     /// </summary>
-    /// <param name="logger">日志记录器</param>
-    /// <param name="poolLogger">连接池日志记录器</param>
+    /// <param name="loggerFactory">日志记录工厂接口</param>
     /// <param name="host">Modbus 服务器主机</param>
     /// <param name="port">Modbus 端口，默认502</param>
-    /// <param name="maxConnections">最大连接数</param>
-    /// <param name="maxConcurrentRequests">最大并发请求数</param>
-    /// <param name="connectTimeoutSeconds">连接超时时间（秒）</param>
+    /// <param name="maxConnections">最大连接数, 默认5</param>
+    /// <param name="maxConcurrentRequests">最大并发请求数, 默认10</param>
+    /// <param name="connectTimeoutSeconds">连接超时时间(s), 默认5</param>
     internal ModbusService(
-        ILogger<ModbusService> logger,
-        ILogger<ConnectionPool> poolLogger,
-        ILogger<Connection> connectionLogger,
+        ILoggerFactory loggerFactory,
         string host,
         int port = 502,
         int maxConnections = 5,
@@ -48,9 +44,8 @@ public class ModbusService : IHostedService, IAsyncDisposable
         int connectTimeoutSeconds = 5
     )
     {
-        _logger = logger;
-        _poolLogger = poolLogger;
-        _connectionLogger = connectionLogger;
+        _loggerFactory = loggerFactory;
+        _logger = loggerFactory.CreateLogger<ModbusService>();
         _host = host;
         _port = port;
         _maxConnections = maxConnections;
@@ -66,7 +61,7 @@ public class ModbusService : IHostedService, IAsyncDisposable
     /// <param name="cancellationToken">取消令牌</param>
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        _connectionPool = new(_factory, _host, _port, _connectTimeout, _poolLogger, _connectionLogger, _maxConnections);
+        _connectionPool = new(_factory, _host, _port, _connectTimeout, _loggerFactory, _maxConnections);
         _logger.Info("ModbusService 已启动");
         await Task.CompletedTask;
     }

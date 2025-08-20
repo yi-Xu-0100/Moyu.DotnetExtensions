@@ -28,8 +28,7 @@ internal sealed class ConnectionPool : IAsyncDisposable
         string host,
         int port,
         TimeSpan timeout,
-        ILogger<ConnectionPool> logger,
-        ILogger<Connection> connectionLogger,
+        ILoggerFactory loggerFactory,
         int maxSize = 10,
         TimeSpan? idleLifetime = null
     )
@@ -38,8 +37,8 @@ internal sealed class ConnectionPool : IAsyncDisposable
         _host = host;
         _port = port;
         _timeout = timeout;
-        _logger = logger;
-        _connectionLogger = connectionLogger;
+        _logger = loggerFactory.CreateLogger<ConnectionPool>();
+        _connectionLogger = loggerFactory.CreateLogger<Connection>();
         _maxSize = maxSize;
         _idleLifetime = idleLifetime ?? TimeSpan.FromMinutes(1);
 
@@ -53,7 +52,7 @@ internal sealed class ConnectionPool : IAsyncDisposable
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e, "Error cleaning up connection");
+                    _logger.Error(e, "定时(30s)清理闲置连接有问题");
                 }
             },
             null,
@@ -73,7 +72,6 @@ internal sealed class ConnectionPool : IAsyncDisposable
         {
             if (pooled.Conn is { IsHealthy: true, Client.Connected: true })
             {
-                // 尝试 Modbus 层 ping
                 if (await TestConnectionAsync(pooled.Conn.Master))
                 {
                     pooled.Touch();
@@ -167,15 +165,16 @@ internal sealed class ConnectionPool : IAsyncDisposable
     /// <summary>
     /// 测试 Modbus 连接是否可用
     /// </summary>
-    private static async Task<bool> TestConnectionAsync(IModbusMaster master)
+    private async Task<bool> TestConnectionAsync(IModbusMaster master)
     {
         try
         {
-            await master.ReadCoilsAsync(0, 1, 0); // 测试读取第 0 号线圈
+            await master.ReadCoilsAsync(0, 0, 0); // 测试读取第 0 号线圈
             return true;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.Warn(ex, $"读默认线圈值测试连接状态失败");
             return false;
         }
     }

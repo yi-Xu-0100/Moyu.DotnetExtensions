@@ -28,7 +28,7 @@ internal sealed class Connection : IAsyncDisposable
         string host,
         int port,
         TimeSpan timeout,
-        ILogger<Connection> logger,
+        ILogger logger,
         CancellationToken? token = null
     )
     {
@@ -60,7 +60,7 @@ internal sealed class Connection : IAsyncDisposable
     private static void SetKeepAliveCrossPlatform(
         Socket socket,
         bool enable,
-        ILogger<Connection> logger,
+        ILogger logger,
         uint keepAliveTimeMs = 5000,
         uint keepAliveIntervalMs = 1000
     )
