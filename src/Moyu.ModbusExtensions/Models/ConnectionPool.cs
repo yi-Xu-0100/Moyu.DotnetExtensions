@@ -17,6 +17,8 @@ internal sealed class ConnectionPool : IAsyncDisposable
     private readonly int _maxSize;
     private readonly TimeSpan _idleLifetime;
     private readonly ConcurrentBag<PooledConnection> _pool = [];
+    private readonly ILogger<ConnectionPool> _logger;
+    private readonly ILogger<Connection> _connectionLogger;
 
     private int _currentSize;
     private readonly Timer _cleanupTimer;
@@ -27,6 +29,7 @@ internal sealed class ConnectionPool : IAsyncDisposable
         int port,
         TimeSpan timeout,
         ILogger<ConnectionPool> logger,
+        ILogger<Connection> connectionLogger,
         int maxSize = 10,
         TimeSpan? idleLifetime = null
     )
@@ -35,6 +38,8 @@ internal sealed class ConnectionPool : IAsyncDisposable
         _host = host;
         _port = port;
         _timeout = timeout;
+        _logger = logger;
+        _connectionLogger = connectionLogger;
         _maxSize = maxSize;
         _idleLifetime = idleLifetime ?? TimeSpan.FromMinutes(1);
 
@@ -66,10 +71,19 @@ internal sealed class ConnectionPool : IAsyncDisposable
         // 优先取可用的
         while (_pool.TryTake(out PooledConnection? pooled))
         {
-            if (pooled.Conn.IsHealthy)
+            if (pooled.Conn is { IsHealthy: true, Client.Connected: true })
             {
-                pooled.Touch();
-                return pooled.Conn;
+                // 尝试 Modbus 层 ping
+                if (await TestConnectionAsync(pooled.Conn.Master))
+                {
+                    pooled.Touch();
+                    return pooled.Conn;
+                }
+
+                _logger.Warn($"连接 {pooled.Conn} 无效，已丢弃");
+                pooled.Conn.IsHealthy = false;
+                await pooled.Conn.DisposeAsync().ConfigureAwait(false);
+                Interlocked.Decrement(ref _currentSize);
             }
 
             await pooled.Conn.DisposeAsync().ConfigureAwait(false);
@@ -82,7 +96,7 @@ internal sealed class ConnectionPool : IAsyncDisposable
             try
             {
                 Connection conn = await Connection
-                    .CreateAsync(_factory, _host, _port, _timeout, cancellationToken)
+                    .CreateAsync(_factory, _host, _port, _timeout, _connectionLogger, cancellationToken)
                     .ConfigureAwait(false);
                 return conn;
             }
@@ -147,6 +161,22 @@ internal sealed class ConnectionPool : IAsyncDisposable
         foreach (PooledConnection s in survivors)
         {
             _pool.Add(s);
+        }
+    }
+
+    /// <summary>
+    /// 测试 Modbus 连接是否可用
+    /// </summary>
+    private static async Task<bool> TestConnectionAsync(IModbusMaster master)
+    {
+        try
+        {
+            await master.ReadCoilsAsync(0, 1, 0); // 测试读取第 0 号线圈
+            return true;
+        }
+        catch
+        {
+            return false;
         }
     }
 

@@ -24,6 +24,7 @@ public class ModbusService : IHostedService, IAsyncDisposable
     private readonly ConcurrentDictionary<string, PollingGroup> _pollingGroups = new();
     private readonly ILogger<ModbusService> _logger;
     private readonly ILogger<ConnectionPool> _poolLogger;
+    private readonly ILogger<Connection> _connectionLogger;
     private ConnectionPool _connectionPool = null!;
 
     /// <summary>
@@ -39,6 +40,7 @@ public class ModbusService : IHostedService, IAsyncDisposable
     internal ModbusService(
         ILogger<ModbusService> logger,
         ILogger<ConnectionPool> poolLogger,
+        ILogger<Connection> connectionLogger,
         string host,
         int port = 502,
         int maxConnections = 5,
@@ -48,6 +50,7 @@ public class ModbusService : IHostedService, IAsyncDisposable
     {
         _logger = logger;
         _poolLogger = poolLogger;
+        _connectionLogger = connectionLogger;
         _host = host;
         _port = port;
         _maxConnections = maxConnections;
@@ -63,7 +66,7 @@ public class ModbusService : IHostedService, IAsyncDisposable
     /// <param name="cancellationToken">取消令牌</param>
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        _connectionPool = new(_factory, _host, _port, _connectTimeout, _poolLogger, _maxConnections);
+        _connectionPool = new(_factory, _host, _port, _connectTimeout, _poolLogger, _connectionLogger, _maxConnections);
         _logger.Info("ModbusService 已启动");
         await Task.CompletedTask;
     }
@@ -100,7 +103,7 @@ public class ModbusService : IHostedService, IAsyncDisposable
     /// <param name="cancellationToken">取消令牌</param>
     public async Task ExecuteRequestAsync(
         Func<IModbusMaster, Task> request,
-        int maxRetries = 1,
+        int maxRetries = 3,
         TimeSpan? reTryTimeSpan = null,
         TimeSpan? waitTimeout = null,
         CancellationToken? cancellationToken = null
@@ -153,7 +156,7 @@ public class ModbusService : IHostedService, IAsyncDisposable
     /// <returns>请求结果</returns>
     public async Task<T> ExecuteRequestAsync<T>(
         Func<IModbusMaster, Task<T>> request,
-        int maxRetries = 1,
+        int maxRetries = 3,
         TimeSpan? reTryTimeSpan = null,
         TimeSpan? waitTimeout = null,
         CancellationToken? token = null
@@ -304,14 +307,15 @@ public class ModbusService : IHostedService, IAsyncDisposable
     /// <param name="maxRetries">最大重试次数</param>
     /// <param name="ct">取消令牌</param>
     /// <param name="retryTimeSpan">重试间隔</param>
-    private static async Task ExecuteWithRetry(
+    private async Task ExecuteWithRetry(
         Func<Task> action,
         int maxRetries,
         CancellationToken ct,
         TimeSpan? retryTimeSpan = null
     )
     {
-        for (int attempt = 1; attempt <= maxRetries; attempt++)
+        int attempt = 0;
+        while (attempt++ < maxRetries)
         {
             ct.ThrowIfCancellationRequested();
             try
@@ -319,12 +323,19 @@ public class ModbusService : IHostedService, IAsyncDisposable
                 await action();
                 return;
             }
-            catch when (attempt < maxRetries)
+            catch (Exception ex) when (attempt < maxRetries)
             {
+                _logger.Warn(ex, $"未成功请求, 等待2s后重试");
                 await Task.Delay(retryTimeSpan ?? TimeSpan.FromSeconds(2), ct);
             }
+            catch (Exception ex) when (attempt >= maxRetries)
+            {
+                string message = $"操作失败，已达最大重试次数 {maxRetries}, {ex.Message}";
+                _logger.Error(ex, message);
+                throw new InvalidOperationException(message);
+            }
         }
-        throw new InvalidOperationException($"操作失败，已达最大重试次数 {maxRetries}");
+        throw new InvalidCastException($"操作失败, 请求异常退出");
     }
 
     /// <summary>
@@ -336,26 +347,34 @@ public class ModbusService : IHostedService, IAsyncDisposable
     /// <param name="ct">取消令牌</param>
     /// <param name="retryTimeSpan">重试间隔</param>
     /// <returns>操作结果</returns>
-    private static async Task<T> ExecuteWithRetry<T>(
+    private async Task<T> ExecuteWithRetry<T>(
         Func<Task<T>> action,
         int maxRetries,
         CancellationToken ct,
         TimeSpan? retryTimeSpan = null
     )
     {
-        for (int attempt = 1; attempt <= maxRetries; attempt++)
+        int attempt = 0;
+        while (attempt++ < maxRetries)
         {
             ct.ThrowIfCancellationRequested();
             try
             {
                 return await action();
             }
-            catch when (attempt < maxRetries)
+            catch (Exception ex) when (attempt < maxRetries)
             {
+                _logger.Warn(ex, $"未成功请求, 等待2s后重试");
                 await Task.Delay(retryTimeSpan ?? TimeSpan.FromSeconds(2), ct);
             }
+            catch (Exception ex) when (attempt >= maxRetries)
+            {
+                string message = $"操作失败, 已达最大重试次数 {maxRetries}, {ex.Message}";
+                _logger.Error(ex, message);
+                throw new InvalidOperationException(message);
+            }
         }
-        throw new InvalidOperationException($"操作失败，已达最大重试次数 {maxRetries}");
+        throw new InvalidCastException($"操作失败, 请求异常退出");
     }
 
     #endregion
