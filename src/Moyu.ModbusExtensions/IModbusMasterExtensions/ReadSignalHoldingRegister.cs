@@ -122,7 +122,7 @@ public static partial class ModbusMasterExtensions
     /// <param name="slaveAddress">从机地址</param>
     /// <param name="startAddress">起始地址</param>
     /// <param name="numberOfBitSignalHoldingRegisters">boolean 类型保持寄存器读取个数</param>
-    /// <returns>boolean 数组(对应保持寄存器位, 长度16*<see cref="numberOfBitSignalHoldingRegisters"/>)</returns>
+    /// <returns>boolean 数组(对应保持寄存器位, 长度16*numberOfBitSignalHoldingRegisters)</returns>
     public static async Task<bool[]> ReadBitSignalsHoldingRegistersAsync(
         this IModbusMaster modbusMaster,
         byte slaveAddress,
@@ -144,7 +144,7 @@ public static partial class ModbusMasterExtensions
     /// <param name="modbusMaster">实现接口 IModbusMaster</param>
     /// <param name="startAddress">起始地址</param>
     /// <param name="numberOfBitSignalHoldingRegisters">boolean 类型保持寄存器读取个数</param>
-    /// <returns>boolean 数组(对应保持寄存器位, 长度16*<see cref="numberOfBitSignalHoldingRegisters"/>)</returns>
+    /// <returns>boolean 数组(对应保持寄存器位, 长度16*numberOfBitSignalHoldingRegisters)</returns>
     public static async Task<bool[]> ReadBitSignalsHoldingRegistersAsync(
         this IModbusMaster modbusMaster,
         ushort startAddress,

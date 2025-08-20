@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <PackageId>Moyu.StructExtensions</PackageId>
-    <Description>Elegant Struct extension methods for .NET 8+.</Description>
+    <PackageId>Moyu.ModbusExtensions</PackageId>
+    <Description>Elegant Modbus extension methods for .NET 8+.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
