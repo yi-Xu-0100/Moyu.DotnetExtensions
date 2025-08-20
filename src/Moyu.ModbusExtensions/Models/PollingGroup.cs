@@ -18,11 +18,22 @@ internal sealed class PollingGroup(string id, TimeSpan interval, int retryCount,
 
     public string Id { get; } = id;
 
+    public int TaskCount{
+        get
+        {
+            lock (_lock)
+            {
+                return _tasks.Count;
+            }
+        }
+    }
+
     public void AddTask(Func<IModbusMaster, Task> task)
     {
         lock (_lock)
         {
-            _tasks.Add(task);
+            if (!_tasks.Contains(task))
+                _tasks.Add(task);
         }
     }
 

@@ -226,7 +226,7 @@ public class ModbusService : IHostedService, IAsyncDisposable
         }
 
         group.AddTask(task);
-        _logger.Info($"在轮询组 {groupId} 添加任务 {task.Method.Name}");
+        _logger.Info($"在轮询组 {groupId} 添加任务 {task.Method.Name}, 总共{group.TaskCount}个任务");
         return true;
     }
 
