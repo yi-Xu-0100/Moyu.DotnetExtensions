@@ -2133,6 +2133,9 @@ csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimenta
 csharp_style_deconstructed_variable_declaration = true:suggestion
 csharp_prefer_system_threading_lock = true:warning
 
+# disable Member can be made private (non-private accessibility)
+resharper_member_can_be_private_global_highlighting = none
+
 # ------------------
 # Visual Basic files
 # ------------------
