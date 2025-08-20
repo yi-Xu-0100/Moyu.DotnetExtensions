@@ -35,7 +35,7 @@ public class ModbusService : IHostedService, IAsyncDisposable
     /// <param name="maxConnections">最大连接数, 默认5</param>
     /// <param name="maxConcurrentRequests">最大并发请求数, 默认10</param>
     /// <param name="connectTimeoutSeconds">连接超时时间(s), 默认5</param>
-    internal ModbusService(
+    public ModbusService(
         ILoggerFactory loggerFactory,
         string host,
         int port = 502,
