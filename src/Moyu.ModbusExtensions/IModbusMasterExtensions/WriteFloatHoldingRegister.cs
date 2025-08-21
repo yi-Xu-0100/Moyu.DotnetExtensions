@@ -4,6 +4,7 @@
 using NModbus;
 
 namespace Moyu.ModbusExtensions;
+
 public static partial class ModbusMasterExtensions
 {
     /// <summary>
@@ -36,7 +37,7 @@ public static partial class ModbusMasterExtensions
     /// <param name="value">float 值</param>
     /// <param name="endian">Modbus字节序</param>
     /// <returns></returns>
-    public static async Task WriteFloatHoldingRegistersAsync(
+    public static async Task WriteFloatHoldingRegisterAsync(
         this IModbusMaster modbusMaster,
         byte slaveAddress,
         ushort startAddress,
@@ -70,10 +71,10 @@ public static partial class ModbusMasterExtensions
     /// <param name="value">float 值</param>
     /// <param name="endian">Modbus字节序</param>
     /// <returns></returns>
-    public static async Task WriteFloatHoldingRegistersAsync(
+    public static async Task WriteFloatHoldingRegisterAsync(
         this IModbusMaster modbusMaster,
         ushort startAddress,
         float value,
         ModbusEndian endian = ModbusEndian.ABCD
-    ) => await modbusMaster.WriteFloatHoldingRegistersAsync(1, startAddress, value, endian);
+    ) => await modbusMaster.WriteFloatHoldingRegisterAsync(1, startAddress, value, endian);
 }
