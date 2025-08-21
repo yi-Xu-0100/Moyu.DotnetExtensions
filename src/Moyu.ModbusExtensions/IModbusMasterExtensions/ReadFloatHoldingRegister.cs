@@ -8,82 +8,82 @@ namespace Moyu.ModbusExtensions;
 public static partial class ModbusMasterExtensions
 {
     /// <summary>
-    /// 读取 Double 类型保持寄存器
+    /// 读取 Float 类型保持寄存器
     /// </summary>
     /// <param name="modbusMaster">实现接口 IModbusMaster</param>
     /// <param name="startAddress">起始地址</param>
     /// <param name="endian">Modbus字节序</param>
-    /// <returns>double 值</returns>
-    public static async Task<double> ReadDoubleHoldingRegisterAsync(
+    /// <returns>float 值</returns>
+    public static async Task<float> ReadFloatHoldingRegisterAsync(
         this IModbusMaster modbusMaster,
         byte slaveAddress,
         ushort startAddress,
         ModbusEndian endian = ModbusEndian.ABCD
     )
     {
-        ushort[] registers = await modbusMaster.ReadHoldingRegistersAsync(slaveAddress, startAddress, 4);
-        return registers.ToDouble(endian);
+        ushort[] registers = await modbusMaster.ReadHoldingRegistersAsync(slaveAddress, startAddress, 2);
+        return registers.ToFloat(endian);
     }
 
     /// <summary>
-    /// 读取 Double 类型保持寄存器 (从机地址 = 1)
+    /// 读取 Float 类型保持寄存器 (从机地址 = 1)
     /// </summary>
     /// <param name="modbusMaster">实现接口 IModbusMaster</param>
     /// <param name="startAddress">起始地址</param>
     /// <param name="endian">Modbus字节序</param>
-    /// <returns>double 值</returns>
-    public static async Task<double> ReadDoubleHoldingRegisterAsync(
+    /// <returns>float 值</returns>
+    public static async Task<float> ReadFloatHoldingRegisterAsync(
         this IModbusMaster modbusMaster,
         ushort startAddress,
         ModbusEndian endian = ModbusEndian.ABCD
     )
     {
-        return await modbusMaster.ReadDoubleHoldingRegisterAsync(1, startAddress, endian);
+        return await modbusMaster.ReadFloatHoldingRegisterAsync(1, startAddress, endian);
     }
 
     /// <summary>
-    /// 读取 Double 类型保持寄存器
+    /// 读取 Float 类型保持寄存器
     /// </summary>
     /// <param name="modbusMaster">实现接口 IModbusMaster</param>
     /// <param name="slaveAddress">从机地址</param>
     /// <param name="startAddress">起始地址</param>
-    /// <param name="numberOfDoubleHoldingRegisters">double 类型保持寄存器读取个数</param>
+    /// <param name="numberOfFloatHoldingRegisters">float 类型保持寄存器读取个数</param>
     /// <param name="endian">Modbus字节序</param>
-    /// <returns>double 数组</returns>
-    public static async Task<double[]> ReadDoubleHoldingRegistersAsync(
+    /// <returns>float 数组</returns>
+    public static async Task<float[]> ReadFloatHoldingRegistersAsync(
         this IModbusMaster modbusMaster,
         byte slaveAddress,
         ushort startAddress,
-        ushort numberOfDoubleHoldingRegisters,
+        ushort numberOfFloatHoldingRegisters,
         ModbusEndian endian = ModbusEndian.ABCD
     )
     {
-        if (numberOfDoubleHoldingRegisters > ushort.MaxValue / 4)
+        if (numberOfFloatHoldingRegisters > ushort.MaxValue / 2)
             throw new ArgumentOutOfRangeException(
-                nameof(numberOfDoubleHoldingRegisters),
+                nameof(numberOfFloatHoldingRegisters),
                 "数量超过 Modbus 协议允许的最大值"
             );
 
         ushort[] registers = await modbusMaster.ReadHoldingRegistersAsync(
             slaveAddress,
             startAddress,
-            (ushort)(numberOfDoubleHoldingRegisters * 4)
+            (ushort)(numberOfFloatHoldingRegisters * 2)
         );
-        return registers.ToDoubles(endian);
+        return registers.ToFloats(endian);
     }
 
     /// <summary>
-    /// 读取 Double 类型保持寄存器 (从机地址 = 1)
+    /// 读取 Float 类型保持寄存器 (从机地址 = 1)
     /// </summary>
     /// <param name="modbusMaster">实现接口 IModbusMaster</param>
     /// <param name="startAddress">起始地址</param>
-    /// <param name="numberOfDoubleHoldingRegisters">double 类型保持寄存器读取个数</param>
+    /// <param name="numberOfFloatHoldingRegisters">float 类型保持寄存器读取个数</param>
     /// <param name="endian">Modbus字节序</param>
-    /// <returns>double 数组</returns>
-    public static async Task<double[]> ReadDoubleHoldingRegistersAsync(
+    /// <returns>float 数组</returns>
+    public static async Task<float[]> ReadFloatHoldingRegistersAsync(
         this IModbusMaster modbusMaster,
         ushort startAddress,
-        ushort numberOfDoubleHoldingRegisters,
+        ushort numberOfFloatHoldingRegisters,
         ModbusEndian endian = ModbusEndian.ABCD
-    ) => await modbusMaster.ReadDoubleHoldingRegistersAsync(1, startAddress, numberOfDoubleHoldingRegisters, endian);
+    ) => await modbusMaster.ReadFloatHoldingRegistersAsync(1, startAddress, numberOfFloatHoldingRegisters, endian);
 }

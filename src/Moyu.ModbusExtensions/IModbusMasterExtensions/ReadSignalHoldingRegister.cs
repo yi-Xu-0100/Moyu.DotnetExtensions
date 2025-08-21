@@ -3,8 +3,6 @@
 
 using NModbus;
 
-// ReSharper disable MemberCanBePrivate.Global
-
 namespace Moyu.ModbusExtensions;
 
 public static partial class ModbusMasterExtensions

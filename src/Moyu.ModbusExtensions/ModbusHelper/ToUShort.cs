@@ -5,6 +5,8 @@ namespace Moyu.ModbusExtensions;
 
 public static partial class ModbusHelper
 {
+    #region double/double[] => ushort[]
+
     /// <summary>
     /// 将 double 转换为 Modbus 寄存器数组（4 个 ushort）
     /// </summary>
@@ -45,6 +47,10 @@ public static partial class ModbusHelper
         return result;
     }
 
+    #endregion
+
+    #region signal => ushort[]
+
     /// <summary>
     /// 将 bool 值转换为 ushort
     /// </summary>
@@ -69,6 +75,10 @@ public static partial class ModbusHelper
         }
         return result;
     }
+
+    #endregion
+
+    #region BitSignal => ushort[]
 
     /// <summary>
     /// 将 16 个 bool 值转换为一个 ushort。
@@ -166,4 +176,50 @@ public static partial class ModbusHelper
 
         return result;
     }
+
+    #endregion
+
+    #region float/float[] => ushort[]
+
+    /// <summary>
+    /// 将 float 转换为 Modbus 寄存器数组（2 个 ushort）
+    /// </summary>
+    /// <param name="value">float 值</param>
+    /// <param name="endian">字节序</param>
+    /// <returns>寄存器数组（长度为 2）</returns>
+    public static ushort[] ToUShorts(this float value, ModbusEndian endian = ModbusEndian.ABCD)
+    {
+        // float -> byte[4]
+        byte[] bytes = BitConverter.GetBytes(value);
+
+        // 调整字节序
+        bytes = ReorderBytes(bytes, endian);
+
+        // byte[4] -> ushort[2]
+        ushort[] registers = new ushort[2];
+        Buffer.BlockCopy(bytes, 0, registers, 0, 4);
+
+        return registers;
+    }
+
+    /// <summary>
+    /// 将 float 数组批量转换为 Modbus 寄存器数组
+    /// </summary>
+    /// <param name="values">float 数组</param>
+    /// <param name="endian">字节序</param>
+    /// <returns>寄存器数组（长度 = values.Length * 2）</returns>
+    public static ushort[] ToUShorts(this float[] values, ModbusEndian endian = ModbusEndian.ABCD)
+    {
+        ushort[] result = new ushort[values.Length * 2];
+
+        for (int i = 0; i < values.Length; i++)
+        {
+            ushort[] slice = values[i].ToUShorts(endian);
+            Array.Copy(slice, 0, result, i * 2, 2);
+        }
+
+        return result;
+    }
+
+    #endregion
 }
