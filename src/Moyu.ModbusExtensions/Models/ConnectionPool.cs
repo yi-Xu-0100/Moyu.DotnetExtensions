@@ -169,7 +169,7 @@ internal sealed class ConnectionPool : IAsyncDisposable
     {
         try
         {
-            await master.ReadCoilsAsync(0, 0, 0); // 测试读取第 0 号线圈
+            await master.ReadCoilsAsync(0, 0, 1); // 测试读取第 0 号线圈
             return true;
         }
         catch (Exception ex)
