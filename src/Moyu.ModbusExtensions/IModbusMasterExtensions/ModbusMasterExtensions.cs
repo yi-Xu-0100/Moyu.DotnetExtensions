@@ -17,7 +17,7 @@ public static partial class ModbusMasterExtensions
     /// <param name="startAddress">起始地址</param>
     /// <param name="numberOfPoints">读取数目</param>
     /// <returns>线圈状态数组</returns>
-    public static async Task<bool[]> ReadCoils(
+    public static async Task<bool[]> ReadCoilsAsync(
         this IModbusMaster modbusMaster,
         ushort startAddress,
         ushort numberOfPoints
