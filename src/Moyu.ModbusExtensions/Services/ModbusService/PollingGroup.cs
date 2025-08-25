@@ -1,6 +1,7 @@
 // Copyright © 2025-present yi-Xu-0100.
 // This file is licensed under the MIT License. See LICENSE for details.
 
+using System.Net.Sockets;
 using Moyu.LogExtensions.LogHelpers;
 using Moyu.ModbusExtensions.Exceptions;
 using Moyu.ModbusExtensions.Models;
@@ -116,6 +117,12 @@ public partial class ModbusService
                         if (conn != null)
                             conn.IsHealthy = false;
                     }
+                    catch (Exception ex) when (ex is SocketException socketEx)
+                    {
+                        _logger.Error($"轮询组 {groupId} 执行失败[{socketEx.ErrorCode}], {socketEx.Message}");
+                        if (conn != null)
+                            conn.IsHealthy = false;
+                    }
                     catch (Exception ex)
                     {
                         _logger.Error(ex, $"轮询组 {groupId} 执行失败");
@@ -144,5 +151,4 @@ public partial class ModbusService
         );
     }
     #endregion
-
 }
