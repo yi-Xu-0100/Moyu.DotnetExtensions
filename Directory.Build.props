@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <PackageVersion>2.6.0</PackageVersion>
+    <PackageVersion>2.6.1</PackageVersion>
     <Authors>yi-Xu-0100</Authors>
     <RepositoryUrl>https://github.com/yi-Xu-0100/Moyu.DotnetExtensions</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
