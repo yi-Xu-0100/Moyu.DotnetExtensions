@@ -100,4 +100,9 @@ internal sealed class Connection : IAsyncDisposable
         Client.Dispose();
         await Task.CompletedTask;
     }
+
+    public override string ToString()
+    {
+        return $"{Client.Client.RemoteEndPoint}|{Client.Client.LocalEndPoint}";
+    }
 }

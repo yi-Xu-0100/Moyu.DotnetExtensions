@@ -2,6 +2,7 @@
 // This file is licensed under the MIT License. See LICENSE for details.
 
 using System.Collections.Concurrent;
+using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using Moyu.LogExtensions.LogHelpers;
 using NModbus;
@@ -19,6 +20,7 @@ internal sealed class ConnectionPool : IAsyncDisposable
     private readonly ConcurrentBag<PooledConnection> _pool = [];
     private readonly ILogger<ConnectionPool> _logger;
     private readonly ILogger<Connection> _connectionLogger;
+    private readonly byte _slaveAddress;
 
     private int _currentSize;
     private readonly Timer _cleanupTimer;
@@ -27,6 +29,7 @@ internal sealed class ConnectionPool : IAsyncDisposable
         ModbusFactory factory,
         string host,
         int port,
+        byte slaveAddress,
         TimeSpan timeout,
         ILoggerFactory loggerFactory,
         int maxSize = 10,
@@ -36,6 +39,7 @@ internal sealed class ConnectionPool : IAsyncDisposable
         _factory = factory;
         _host = host;
         _port = port;
+        _slaveAddress = slaveAddress;
         _timeout = timeout;
         _logger = loggerFactory.CreateLogger<ConnectionPool>();
         _connectionLogger = loggerFactory.CreateLogger<Connection>();
@@ -72,7 +76,7 @@ internal sealed class ConnectionPool : IAsyncDisposable
         {
             if (pooled.Conn is { IsHealthy: true, Client.Connected: true })
             {
-                if (await TestConnectionAsync(pooled.Conn.Master))
+                if (await TestConnectionAsync(pooled.Conn.Master, _slaveAddress))
                 {
                     pooled.Touch();
                     return pooled.Conn;
@@ -165,12 +169,17 @@ internal sealed class ConnectionPool : IAsyncDisposable
     /// <summary>
     /// 测试 Modbus 连接是否可用
     /// </summary>
-    private async Task<bool> TestConnectionAsync(IModbusMaster master)
+    private async Task<bool> TestConnectionAsync(IModbusMaster master, byte slaveAddress)
     {
         try
         {
-            await master.ReadCoilsAsync(0, 1); // 测试读取第 0 号线圈
+            await master.ReadCoilsAsync(slaveAddress, 0, 1); // 测试读取第 0 号线圈
             return true;
+        }
+        catch (Exception ex) when (ex is IOException && ex.InnerException is SocketException socketEx)
+        {
+            _logger.Warn($"读默认线圈值测试连接状态失败[{socketEx.ErrorCode}], {ex.Message}");
+            return false;
         }
         catch (Exception ex)
         {
@@ -201,4 +210,9 @@ internal sealed class PooledConnection
     }
 
     public void Touch() => LastUsed = DateTime.UtcNow;
+
+    public override string ToString()
+    {
+        return $"{Conn}[{LastUsed}]";
+    }
 }
